@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,12 +36,12 @@ public class Student {
 	
 	private Double cgpa;
 	
-	@NotBlank(message = "Please enter the Enrollment Date")
+	@NotNull(message = "Please enter the Enrollment Date")
 	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate enrollmentDate;
 	
-	@NotBlank(message = "Please specify the Nationality")
+	@NotNull(message = "Please specify the Nationality")
 	@Column(nullable = false)
 	private Boolean isInternational;
 

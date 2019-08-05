@@ -1,7 +1,7 @@
 $(function () {
-    $('#tblPatients').DataTable({"ordering": false});
+    $('#tblStudents').DataTable({"ordering": false});
     //Date picker
-    $('#datepicker').datepicker({
+    $('#enrollmentDate').datepicker({
         autoclose: true
     });
 });

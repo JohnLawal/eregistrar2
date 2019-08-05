@@ -25,6 +25,7 @@ public class StudentController {
 	@GetMapping(value = { "/eregistrar/students/list", "/eregistrar/students/list" })
 	public ModelAndView listStudents() {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("pageTitle", "List of Registered Students");
 		modelAndView.addObject("students", studentService.getAllRegisteredStudents());
 		modelAndView.setViewName(AppStrings.STUDENT_LIST_PAGE.val());
 		return modelAndView;
@@ -32,6 +33,7 @@ public class StudentController {
 
 	@GetMapping(value = { "/eregistrar/students/new", "eregistrar/students/new" })
 	public String displayNewStudentForm(Model model) {
+		model.addAttribute("pageTitle", "Register A New Student");
 		model.addAttribute("student", new Student());
 		return AppStrings.NEW_STUDENT_PAGE.val();
 	}
@@ -39,22 +41,25 @@ public class StudentController {
 	@PostMapping(value = { "/eregistrar/students/new", "eregistrar/students/new" })
 	public String addNewStudent(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult,
 			Model model) {
+		System.out.println(student);
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errors", bindingResult.getAllErrors());
 			return AppStrings.NEW_STUDENT_PAGE.val();
 		}
+		
 		studentService.saveStudent(student);
 		return "redirect:/" + AppStrings.SITE_ROOT.val() + AppStrings.STUDENT_LIST_PAGE.val();
 	}
-
+	
 	@GetMapping(value = { "/eregistrar/students/edit/{studentId}", "eregistrar/students/edit/{studentId}" })
 	public String editStudent(@PathVariable Long studentId, Model model) {
 		Student student = studentService.getStudentById((Long) studentId);
 		if (student != null) {
+			model.addAttribute("pageTitle", "Edit Student");
 			model.addAttribute("student", student);
 			return AppStrings.EDIT_STUDENT_PAGE.val();
 		}
-		return AppStrings.EDIT_STUDENT_PAGE.val();
+		return "redirect:/" + AppStrings.SITE_ROOT.val() + AppStrings.STUDENT_LIST_PAGE.val();
 	}
 
 	@PostMapping(value = { "/eregistrar/students/edit", "eregistrar/students/edit" })

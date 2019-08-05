@@ -1,85 +1,93 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- include header fragment -->
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-user"></i> <?= $title ?>   
-        </h1>
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?= base_url() ?>"><i class="fa fa-home"></i> Home</a>               
-            </li>
-            <li class="active">
-                <?= $title ?> 
-            </li>
-        </ol>
+	<div th:replace="~{fragments/header :: header}"></div>
 
-    </section>
+	<!-- include aside fragment -->
+	<div th:replace="~{fragments/aside :: aside}"></div>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <a style="margin: 10px"  href="<?= base_url('welcome/register') ?>" class="btn btn-success">Register A New Patient</a>
-            </div>
-        </div>
-        <!-- row -->
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                    <div class="box-body table-responsive">
-                        <table id="tblPatients" class="table table-bordered table-striped">
-                            <thead>
-                                <tr> 
-                                    <th>Patient Number</th>
-                                    <th>Full Names</th>
-                                    <th>Email</th>
-                                    <th>Contact Phone</th>
-                                    <th>Date of Birth</th>
-                                    <th>OutPatient?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($patients as $patient) {
-                                    $dateTime = new DateTime();
-                                    $dateTime->setTimestamp($patient[DbStrings::$DATE_OF_BIRTH]);
-                                    ?>
-                                    <tr>
-                                        <td class = "mailbox-name">
-                                            <?= $patient[DbStrings::$PATIENT_NUMBER] ?>
-                                        </td>
-                                        <td class = "mailbox-name">
-                                            <?= $patient[DbStrings::$FULLNAME] ?>
-                                        </td>
-                                        <td class = "mailbox-name">
-                                            <?= $patient[DbStrings::$EMAIL] ?>
-                                        </td>
-                                        <td class = "mailbox-name">
-                                            <?= $patient[DbStrings::$PHONE] ?>
-                                        </td>
-                                        <td class = "mailbox-name">
-                                            <?= $dateTime->format("M d, Y"); ?>
-                                        </td>
-                                        <td class = "mailbox-name">
-                                            <?= $patient[DbStrings::$IS_OUT_PATIENT] == 1 ? "Yes" : "No" ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>                               
-                            </tbody>
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				<i class="fa fa-user"></i> <span th:text="${pageTitle}"></span>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/eregistrar}"><i class="fa fa-home"></i>
+						Home</a></li>
+				<li class="active" th:text="${pageTitle}"></li>
+			</ol>
 
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-            </div>
-        </div>
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+				<div class="col-md-12">
+					<a style="margin: 10px" th:href="@{/eregistrar/students/new}"
+						class="btn btn-warning">Register A New Student</a>
+				</div>
+			</div>
+			<!-- row -->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-body table-responsive">
+							<table id="tblStudents"
+								class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>S/N</th>
+										<th>Student Number</th>
+										<th>First Name</th>
+										<th>Middle Name</th>
+										<th>Last Name</th>
+										<th>CGPA</th>
+										<th>IsInternational?</th>
+										<th>Enrollment Date</th>
+										<th>Edit</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="student,iterStat : ${students}">
+										<th scope="row" th:text="${iterStat.count}"></th>
+										<td class="mailbox-name" th:text="${student.studentNumber}"></td>
+										<td class="mailbox-name" th:text="${student.firstName}"></td>
+										<td class="mailbox-name" th:text="${student.middleName}"></td>
+										<td class="mailbox-name" th:text="${student.lastName}"></td>
+										<td class="mailbox-name" th:text="${student.cgpa}"></td>
+										<td class="mailbox-name" th:text="${student.isInternational}"></td>
+										<td class="mailbox-name" th:text="${student.enrollmentDate}"></td>
+
+										<td><a class="btn btn-warning"
+											th:href="@{'/eregistrar/students/edit/{studentId}'(studentId=${student.studentId})}">
+												<i class="fa fa-pencil"></i>
+										</a></td>
+										<td><a class="btn btn-danger"
+											th:href="@{'/eregistrar/students/delete/' + ${student.studentId}}">
+												<i class="fa fa-trash"></i>
+										</a></td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!-- /.box -->
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

@@ -18,7 +18,7 @@
 				<i class="fa fa-user"></i> <span th:text="${pageTitle}"></span>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="<?= base_url() ?>"><i class="fa fa-home"></i>
+				<li><a th:href="@{/eregistrar}"><i class="fa fa-home"></i>
 						Home</a></li>
 				<li class="active" th:text="${pageTitle}"></li>
 			</ol>

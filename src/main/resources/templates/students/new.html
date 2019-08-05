@@ -1,89 +1,139 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- include header fragment -->
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            <i class="fa fa-user"></i> <?= $title ?>   
-        </h1>
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?= base_url() ?>"><i class="fa fa-home"></i> Home</a>               
-            </li>
-            <li class="active">
-                <?= $title ?> 
-            </li>
-        </ol>
+	<div th:replace="~{fragments/header :: header}"></div>
 
-    </section>
+	<!-- include aside fragment -->
+	<div th:replace="~{fragments/aside :: aside}"></div>
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
 
-    <!-- Main content -->
-    <section class="content">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				<i class="fa fa-user"></i> <span th:text="${pageTitle}"></span>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a th:href="@{/eregistrar}"><i class="fa fa-home"></i> Home</a></li>
+				<li class="active" th:text="${pageTitle}"></li>
+			</ol>
 
-        <!-- row -->
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="box">
-                    <div class="box-body table-responsive">
-                        <form class="form-horizontal form-material" action="#" onsubmit="submitdetails(); return false;" role="form">
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <label for="outpatient">Is An Out Patient?</label>
-                                    <select id="outpatient" class="ticket_set form-control form-control-line" required>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <label for="fullname">Full Name</label>
-                                    <input class="form-control form-control-line" required="" type="text" id="fullname" value="" placeholder="Fullname"> 
-                                </div>
-                            </div>
+		</section>
 
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <label for="email">Email</label>
-                                    <input class="form-control form-control-line" required="" type="email" id="email" value="" placeholder="Email"> 
-                                </div>
-                            </div>
+		<!-- Main content -->
+		<section class="content">
+			<!-- row -->
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="box">
+						<div class="box-body table-responsive">
+							<form id="newStudentForm" class="form-horizontal form-material"
+								action="/eregistrar/students/new" th:object="${student}"
+								method="post" role="form">
+								<input type="hidden" name="studentId"
+									th:value="${student.studentId}" />
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label for="isInternational">Is An International
+											Student?</label> <select id="isInternational"
+											th:value="${student.isInternational}" name="isInternational"
+											class="form-control form-control-line" required>
+											<option th:value="${true}" value="true">Yes</option>
+											<option th:value="${false}" value="false">No</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<span th:if="${#fields.hasErrors('studentNumber')}"
+											th:errors="*{studentNumber}" class="alert alert-danger"></span>
+										<label for="studentNumber">Student Number</label> <input
+											class="form-control form-control-line" required type="text"
+											name="studentNumber" id="studentNumber"
+											th:value="${student.studentNumber}" value=""
+											placeholder="Student Number (e.g 000-61-0001)">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label for="firstName">First Name</label> <span
+											th:if="${#fields.hasErrors('firstName')}"
+											th:errors="*{firstName}" class="alert alert-danger"></span> <input
+											class="form-control form-control-line" required type="text"
+											name="firstName" id="firstName"
+											th:value="${student.firstName}"
+											placeholder="First Name (e.g John)">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label for="middleName">Middle Name</label> <span
+											th:if="${#fields.hasErrors('middleName')}"
+											th:errors="*{middleName}" class="alert alert-danger"></span>
+										<input class="form-control form-control-line" type="text"
+											value="" name="middleName"
+											placeholder="Middle Name (e.g Imho)" id="middleName"
+											th:value="${student.middleName}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label for="lastName">Last Name</label> <span
+											th:if="${#fields.hasErrors('lastName')}"
+											th:errors="*{lastName}" class="alert alert-danger"></span> <input
+											class="form-control form-control-line" required type="text"
+											name="lastName" value="" placeholder="Last Name (e.g Lawal)"
+											id="lastName" th:value="${student.lastName}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label for="cgpa">CGPA</label> <span
+											th:if="${#fields.hasErrors('cgpa')}" th:errors="*{cgpa}"
+											class="alert alert-danger"></span> <input
+											class="form-control form-control-line" required type="number"
+											name="cgpa" min="1" step="0.01" id="cgpa" value=""
+											th:value="${student.cgpa}" placeholder="CGPA (e.g 3.98)">
+									</div>
+								</div>
+								<!-- Date -->
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label>Enrollment Date:</label>
+										<div class="input-group date">
+											<span th:if="${#fields.hasErrors('enrollmentDate')}"
+												th:errors="*{enrollmentDate}" class="alert alert-danger"></span>
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+											<input autocomplete="false" required type="date"
+												name="enrollmentDate" class="form-control pull-right"
+												id="enrollmentDate" th:value="${student.enrollmentDate}">
+										</div>
+										<!-- /.input group -->
+									</div>
+								</div>
+								<!-- /.form group -->
 
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <label for="phone">Phone Number</label>
-                                    <input class="form-control form-control-line" required="" type="text" id="phone" value="" placeholder="Phone"> 
-                                </div>
-                            </div>
+								<div class="modal-footer">
+									<button type="submit" class="btn  btn-success ">Register</button>
+								</div>
+							</form>
+						</div>
 
-                            <!-- Date -->
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <label>Date of Birth:</label>
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input autocomplete="false" required="" type="text" class="form-control pull-right" id="datepicker">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                            </div>
-                            <!-- /.form group -->
+					</div>
 
-                            <div class="modal-footer">
-                                <button  type="submit" class="btn  btn-success ">Register</button>
-                            </div>
-                        </form>
-                    </div>
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- include footer fragment -->
+	<div th:replace="~{fragments/footer :: footer}"></div>
 
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- /.content -->
-</div>
+</body>
+</html>
