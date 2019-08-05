@@ -10,7 +10,7 @@ public class HomeController {
 	@GetMapping(value = { "/", "/eregistrar", "eregistrar", "/eregistrar/home", "eregistrar/home" })
 	public ModelAndView home() {
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("pageTitle", "Welcome To E_REGISTRAR by John Lawal");
+		modelAndView.addObject("pageTitle", "Welcome To eRegistrar");
 		modelAndView.setViewName(AppStrings.HOME_PAGE.val());
 		return modelAndView;
 	}

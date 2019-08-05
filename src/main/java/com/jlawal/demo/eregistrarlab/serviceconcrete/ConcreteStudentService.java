@@ -33,13 +33,13 @@ public class ConcreteStudentService implements StudentService {
 	public void saveStudent(Student student) {
 		studentRepository.save(student);
 	}
-
-	@Override
-	public void updateStudent(Student student) {
-		studentRepository.update(student, student.getStudentNumber(), student.getFirstName(), student.getMiddleName(),
-				student.getLastName(), student.getCgpa(), student.getEnrollmentDate(), student.getIsInternational());
-
-	}
+//
+//	@Override
+//	public void updateStudent(Student student) {
+//		studentRepository.update(student, student.getStudentNumber(), student.getFirstName(), student.getMiddleName(),
+//				student.getLastName(), student.getCgpa(), student.getEnrollmentDate(), student.getIsInternational());
+//
+//	}
 
 	@Override
 	public void deleteStudent(Student student) {
