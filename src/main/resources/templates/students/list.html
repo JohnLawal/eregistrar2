@@ -69,9 +69,8 @@
 											th:href="@{'/eregistrar/students/edit/{studentId}'(studentId=${student.studentId})}">
 												<i class="fa fa-pencil"></i>
 										</a></td>
-										<td><a class="btn btn-danger"
-											th:href="@{'/eregistrar/students/delete/' + ${student.studentId}}">
-												<i class="fa fa-trash"></i>
+										<td><a class="btn btn-danger" th:onclick="'deleteStudent(\'' + ${student.studentId} +'\');'">
+										<i class="fa fa-trash"></i>
 										</a></td>
 									</tr>
 								</tbody>
