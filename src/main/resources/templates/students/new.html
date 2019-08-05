@@ -1,0 +1,89 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-user"></i> <?= $title ?>   
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= base_url() ?>"><i class="fa fa-home"></i> Home</a>               
+            </li>
+            <li class="active">
+                <?= $title ?> 
+            </li>
+        </ol>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="box">
+                    <div class="box-body table-responsive">
+                        <form class="form-horizontal form-material" action="#" onsubmit="submitdetails(); return false;" role="form">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label for="outpatient">Is An Out Patient?</label>
+                                    <select id="outpatient" class="ticket_set form-control form-control-line" required>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label for="fullname">Full Name</label>
+                                    <input class="form-control form-control-line" required="" type="text" id="fullname" value="" placeholder="Fullname"> 
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label for="email">Email</label>
+                                    <input class="form-control form-control-line" required="" type="email" id="email" value="" placeholder="Email"> 
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label for="phone">Phone Number</label>
+                                    <input class="form-control form-control-line" required="" type="text" id="phone" value="" placeholder="Phone"> 
+                                </div>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label>Date of Birth:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input autocomplete="false" required="" type="text" class="form-control pull-right" id="datepicker">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                            </div>
+                            <!-- /.form group -->
+
+                            <div class="modal-footer">
+                                <button  type="submit" class="btn  btn-success ">Register</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>

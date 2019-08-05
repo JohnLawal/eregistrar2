@@ -15,21 +15,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "students")
 public class Student {
-//
-//	   studentNumber: e.g. 000-61-0001 (required)
-//
-//	   FirstName: e.g. Anna (required)
-//
-//	   MiddleName: (optional)
-//
-//	   LastName: e.g. Smith (required)
-//
-//	   cgpa: e.g. 3.78 (optional)
-//
-//	   enrollmentDate: e.g. 2019-5-12 (required)
-//
-//	   isInternational: (values: "Yes", "No") (required) - Hint: Implement/present this data in a drop-down list
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long studentId;

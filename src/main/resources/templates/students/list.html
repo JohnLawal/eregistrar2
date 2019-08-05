@@ -1,0 +1,85 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-user"></i> <?= $title ?>   
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?= base_url() ?>"><i class="fa fa-home"></i> Home</a>               
+            </li>
+            <li class="active">
+                <?= $title ?> 
+            </li>
+        </ol>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a style="margin: 10px"  href="<?= base_url('welcome/register') ?>" class="btn btn-success">Register A New Patient</a>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-body table-responsive">
+                        <table id="tblPatients" class="table table-bordered table-striped">
+                            <thead>
+                                <tr> 
+                                    <th>Patient Number</th>
+                                    <th>Full Names</th>
+                                    <th>Email</th>
+                                    <th>Contact Phone</th>
+                                    <th>Date of Birth</th>
+                                    <th>OutPatient?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($patients as $patient) {
+                                    $dateTime = new DateTime();
+                                    $dateTime->setTimestamp($patient[DbStrings::$DATE_OF_BIRTH]);
+                                    ?>
+                                    <tr>
+                                        <td class = "mailbox-name">
+                                            <?= $patient[DbStrings::$PATIENT_NUMBER] ?>
+                                        </td>
+                                        <td class = "mailbox-name">
+                                            <?= $patient[DbStrings::$FULLNAME] ?>
+                                        </td>
+                                        <td class = "mailbox-name">
+                                            <?= $patient[DbStrings::$EMAIL] ?>
+                                        </td>
+                                        <td class = "mailbox-name">
+                                            <?= $patient[DbStrings::$PHONE] ?>
+                                        </td>
+                                        <td class = "mailbox-name">
+                                            <?= $dateTime->format("M d, Y"); ?>
+                                        </td>
+                                        <td class = "mailbox-name">
+                                            <?= $patient[DbStrings::$IS_OUT_PATIENT] == 1 ? "Yes" : "No" ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>                               
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
