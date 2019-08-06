@@ -1,9 +1,12 @@
 package com.jlawal.demo.eregistrarlab.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,14 +46,25 @@ public class StudentController {
 			Model model) {
 		System.out.println(student);
 		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
 			model.addAttribute("errors", bindingResult.getAllErrors());
 			return AppStrings.NEW_STUDENT_PAGE.val();
 		}
+
+		try {
+			studentService.saveStudent(student);
+			return "redirect:/" + AppStrings.SITE_ROOT.val() + AppStrings.STUDENT_LIST_PAGE.val();
+		} catch (DataIntegrityViolationException ex) {
+			System.out.println(ex.getClass());
+			ObjectError duplicateNumberError = new FieldError("student","studentNumber","This student number already exists");
+			bindingResult.addError(duplicateNumberError);
+			model.addAttribute("errors", bindingResult.getAllErrors());
+			return AppStrings.NEW_STUDENT_PAGE.val();
+		}
+
 		
-		studentService.saveStudent(student);
-		return "redirect:/" + AppStrings.SITE_ROOT.val() + AppStrings.STUDENT_LIST_PAGE.val();
 	}
-	
+
 	@GetMapping(value = { "/eregistrar/students/edit/{studentId}", "eregistrar/students/edit/{studentId}" })
 	public String editStudent(@PathVariable Long studentId, Model model) {
 		Student student = studentService.getStudentById((Long) studentId);

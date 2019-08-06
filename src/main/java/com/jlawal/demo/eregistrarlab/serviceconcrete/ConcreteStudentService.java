@@ -2,6 +2,7 @@ package com.jlawal.demo.eregistrarlab.serviceconcrete;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,13 @@ public class ConcreteStudentService implements StudentService {
 
 	@Override
 	public void saveStudent(Student student) {
-		studentRepository.save(student);
+		try {
+			studentRepository.save(student);
+		}catch(ConstraintViolationException ex) {
+			System.out.print("constraint error");
+			throw ex; 
+		}
+		
 	}
 
 	@Override

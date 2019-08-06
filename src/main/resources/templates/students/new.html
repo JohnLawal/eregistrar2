@@ -96,7 +96,7 @@
 											th:if="${#fields.hasErrors('cgpa')}" th:errors="*{cgpa}"
 											class="alert alert-danger"></span> <input
 											class="form-control form-control-line" required type="number"
-											name="cgpa" min="1" step="0.01" id="cgpa" value=""
+											name="cgpa" min="1" max="4" step="0.01" id="cgpa" value=""
 											th:value="${student.cgpa}" placeholder="CGPA (e.g 3.98)">
 									</div>
 								</div>
